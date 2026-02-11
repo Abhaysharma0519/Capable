@@ -17,6 +17,7 @@ import Forgotpwd from "./pages/Forgotpwd";
 // Admin Page
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminUser from "./pages/AdminUser";
+import AdminOrganizations from "./pages/AdminOrganizations";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -53,6 +54,7 @@ function App() {
           {/* Admin Routes */}
           <Route path="/admin-dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
           <Route path="/admin/users" element={<ProtectedRoute><AdminUser /></ProtectedRoute>} />
+          <Route path="/admin/organizations" element={<ProtectedRoute><AdminOrganizations /></ProtectedRoute>} />
 
           {/* 404 Redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />

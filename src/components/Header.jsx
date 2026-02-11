@@ -308,7 +308,7 @@ const Header = () => {
             className="text-white px-7 py-3 rounded-full text-sm font-bold transition-all shadow-lg shadow-[#6A5AFF]/20 hover:shadow-[#6A5AFF]/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
             style={{ backgroundColor: themeColor }}
           >
-            Get Started
+            Request Demo
           </button>
         </div>
 
@@ -388,7 +388,7 @@ const Header = () => {
               className="w-full py-4 rounded-2xl text-white font-bold shadow-xl"
               style={{ backgroundColor: themeColor }}
             >
-              Get Started
+              Request Demo
             </button>
           </div>
         </div>

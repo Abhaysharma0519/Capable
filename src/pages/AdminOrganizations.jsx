@@ -13,20 +13,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
 import AdminSidebar from "../components/AdminSidebar";
 
-export default function AdminUser() {
+export default function AdminOrganizations() {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("All");
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
+  const [editingOrg, setEditingOrg] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [userToDelete, setUserToDelete] = useState(null);
-  const [showAddUserModal, setShowAddUserModal] = useState(false);
-  const [newUser, setNewUser] = useState({
-    userType: "Auditor",
+  const [orgToDelete, setOrgToDelete] = useState(null);
+  const [showAddOrgModal, setShowAddOrgModal] = useState(false);
+  const [newOrg, setNewOrg] = useState({
+    name: "",
     email: "",
-    password: "",
   });
 
   // Check if user is actually an admin
@@ -46,110 +44,64 @@ export default function AdminUser() {
     {
       id: 1,
       title: "System",
-      desc: "New user added successfully",
+      desc: "New organization added successfully",
       time: "Just now",
       type: "info",
     },
   ]);
 
-  const [users, setUsers] = useState([
-    {
-      id: 6,
-      name: "John Doe",
-      userType: "Auditor",
-      email: "john.doe@capable.com",
-      avatar: "https://i.pravatar.cc/150?img=12",
-      color: "bg-gray-700",
-    },
-    {
-      id: 7,
-      name: "Jack Doe",
-      userType: "Auditor",
-      email: "jack.doe@capable.com",
-      avatar: "https://i.pravatar.cc/150?img=13",
-      color: "bg-gray-700",
-    },
-    {
-      id: 8,
-      name: "Joe Doe",
-      userType: "Auditor",
-      email: "joe.doe@capable.com",
-      avatar: "https://i.pravatar.cc/150?img=14",
-      color: "bg-gray-700",
-    },
-    {
-      id: 9,
-      name: "Jane Doe",
-      userType: "PMO",
-      email: "jane.doe@capable.com",
-      avatar: "https://i.pravatar.cc/150?img=47",
-      color: "bg-gray-700",
-    },
-    {
-      id: 10,
-      name: "Abhay Sharma",
-      userType: "Admin",
-      email: "super.admin@capable.com",
-      avatar: "A",
-      color: "bg-[#6A5AFF]",
-    },
+  const [organizations, setOrganizations] = useState([
+    { id: 1, name: "Company-1 Pvt. Ltd.", date: "Jan 9th, 2026", email: "management@company1.com", color: "bg-yellow-400" },
+    { id: 2, name: "Company-2 Pvt. Ltd.", date: "Jan 9th, 2026", email: "management@company2.com", color: "bg-rose-400" },
+    { id: 3, name: "Company-3 Pvt. Ltd.", date: "Jan 9th, 2026", email: "management@company3.com", color: "bg-cyan-400" },
+    { id: 4, name: "Company-4 Pvt. Ltd.", date: "Jan 9th, 2026", email: "management@company4.com", color: "bg-green-400" },
+    { id: 5, name: "Company-5 Pvt. Ltd.", date: "Jan 9th, 2026", email: "management@company5.com", color: "bg-pink-400" },
   ]);
-
-  const tabs = ["All", "PMO", "Admin", "Auditors"];
-
-  const filteredUsers = users.filter((user) => {
-    if (activeTab === "All") return true;
-    if (activeTab === "PMO") return user.userType === "PMO";
-    if (activeTab === "Admin") return user.userType === "Admin";
-    if (activeTab === "Auditors") return user.userType === "Auditor";
-    return true;
-  });
 
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
 
-  const handleEdit = (user) => {
-    setEditingUser({ ...user });
+  const handleEdit = (org) => {
+    setEditingOrg({ ...org });
     setShowEditModal(true);
   };
 
-  const handleDelete = (user) => {
-    setUserToDelete(user);
+  const handleDelete = (org) => {
+    setOrgToDelete(org);
     setShowDeleteModal(true);
   };
 
   const confirmDelete = () => {
-    setUsers(users.filter((u) => u.id !== userToDelete.id));
-    toast.success(`${userToDelete.name} has been deleted successfully`);
+    setOrganizations(organizations.filter((o) => o.id !== orgToDelete.id));
+    toast.success(`${orgToDelete.name} has been deleted successfully`);
     setShowDeleteModal(false);
-    setUserToDelete(null);
+    setOrgToDelete(null);
   };
 
   const saveEdit = () => {
-    setUsers(users.map((u) => (u.id === editingUser.id ? editingUser : u)));
-    toast.success(`${editingUser.name} has been updated successfully`);
+    setOrganizations(organizations.map((o) => (o.id === editingOrg.id ? editingOrg : o)));
+    toast.success(`${editingOrg.name} has been updated successfully`);
     setShowEditModal(false);
-    setEditingUser(null);
+    setEditingOrg(null);
   };
 
-  const saveNewUser = () => {
-    const newUserData = {
-      id: users.length + 1,
-      name: (newUser.email || "").split("@")[0] || newUser.userType,
-      userType: newUser.userType,
-      email: newUser.email,
-      avatar: (newUser.email || "").charAt(0).toUpperCase(),
-      color: "bg-[#6A5AFF]",
+  const saveNewOrg = () => {
+    const colors = ["bg-yellow-400", "bg-rose-400", "bg-cyan-400", "bg-green-400", "bg-pink-400"];
+    const newOrgData = {
+      id: organizations.length + 1,
+      name: newOrg.name,
+      email: newOrg.email,
+      date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) + "th",
+      color: colors[organizations.length % colors.length],
     };
-    setUsers([...users, newUserData]);
-    toast.success(`${newUserData.email} has been added successfully`);
-    setShowAddUserModal(false);
-    setNewUser({
-      userType: "Auditor",
+    setOrganizations([...organizations, newOrgData]);
+    toast.success(`${newOrg.name} has been added successfully`);
+    setShowAddOrgModal(false);
+    setNewOrg({
+      name: "",
       email: "",
-      password: "",
     });
   };
 
@@ -162,7 +114,7 @@ export default function AdminUser() {
         <header className="flex justify-between items-center mb-8 pb-6 border-b border-blue-500">
           <div className="flex flex-col text-left">
             <h2 className="text-2xl font-black text-[#111827] tracking-tight">
-              Users
+              Client Organizations
             </h2>
             <p className="text-xs text-gray-500 font-medium md:hidden">
               Welcome, {userData.name}
@@ -306,57 +258,29 @@ export default function AdminUser() {
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h3 className="text-xl font-black text-slate-800 mb-1">
-                  Manage and Monitor Users
+                  Manage and Monitor Client Organizations
                 </h3>
                 <p className="text-sm text-slate-500">
-                  Create, control, and oversee all user access in one place.
+                  Create, control, and oversee all client organizations in one place.
                 </p>
               </div>
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setShowAddUserModal(true)}
+                onClick={() => setShowAddOrgModal(true)}
                 className="flex items-center gap-2 px-6 py-3 bg-[#6A5AFF] text-white rounded-xl font-bold text-sm shadow-lg hover:bg-[#5D45FD] transition-all"
               >
                 <Plus size={18} />
-                Add User
+                Add New Company
               </motion.button>
-            </div>
-
-            {/* Tabs */}
-            <div className="flex gap-6 border-b border-gray-200">
-              {tabs.map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`pb-3 text-sm font-bold transition-all relative ${
-                    activeTab === tab
-                      ? "text-[#6A5AFF]"
-                      : "text-gray-400 hover:text-gray-600"
-                  }`}
-                >
-                  {tab}
-                  {activeTab === tab && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#6A5AFF]"
-                      transition={{
-                        type: "spring",
-                        stiffness: 380,
-                        damping: 30,
-                      }}
-                    />
-                  )}
-                </button>
-              ))}
             </div>
           </div>
 
-          {/* User List Table */}
+          {/* Organizations List Table */}
           <div className="p-8">
             <div className="mb-4">
               <h4 className="text-sm font-black text-slate-800 border-l-4 border-[#6A5AFF] pl-3">
-                User List
+                Organizations List
               </h4>
             </div>
 
@@ -368,7 +292,7 @@ export default function AdminUser() {
                       Name
                     </th>
                     <th className="text-left py-4 px-4 text-xs font-black text-gray-500 uppercase tracking-wider">
-                      User Type
+                      Sign Up Date
                     </th>
                     <th className="text-left py-4 px-4 text-xs font-black text-gray-500 uppercase tracking-wider">
                       E-mail
@@ -380,9 +304,9 @@ export default function AdminUser() {
                 </thead>
                 <tbody>
                   <AnimatePresence>
-                    {filteredUsers.map((user, index) => (
+                    {organizations.map((org, index) => (
                       <motion.tr
-                        key={user.id}
+                        key={org.id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
@@ -392,31 +316,21 @@ export default function AdminUser() {
                         <td className="py-4 px-4">
                           <div className="flex items-center gap-3">
                             <div
-                              className={`w-8 h-8 rounded-full ${user.color} flex items-center justify-center text-white font-bold text-xs overflow-hidden`}
-                            >
-                              {user.avatar.startsWith("http") ? (
-                                <img
-                                  src={user.avatar}
-                                  alt={user.name}
-                                  className="w-full h-full object-cover"
-                                />
-                              ) : (
-                                user.avatar
-                              )}
-                            </div>
+                              className={`w-8 h-8 rounded-full ${org.color} flex items-center justify-center text-white font-bold text-xs`}
+                            />
                             <span className="text-sm font-bold text-slate-800">
-                              {user.name}
+                              {org.name}
                             </span>
                           </div>
                         </td>
                         <td className="py-4 px-4">
                           <span className="text-sm text-slate-600">
-                            {user.userType}
+                            {org.date}
                           </span>
                         </td>
                         <td className="py-4 px-4">
                           <span className="text-sm text-slate-600">
-                            {user.email}
+                            {org.email}
                           </span>
                         </td>
                         <td className="py-4 px-4">
@@ -424,18 +338,18 @@ export default function AdminUser() {
                             <motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
-                              onClick={() => handleEdit(user)}
+                              onClick={() => handleEdit(org)}
                               className="p-2 text-gray-600 hover:text-[#6A5AFF] hover:bg-indigo-50 rounded-lg transition-all"
-                              title="Edit user"
+                              title="Edit organization"
                             >
                               <Pencil size={16} />
                             </motion.button>
                             <motion.button
                               whileHover={{ scale: 1.1 }}
                               whileTap={{ scale: 0.9 }}
-                              onClick={() => handleDelete(user)}
+                              onClick={() => handleDelete(org)}
                               className="p-2 text-gray-600 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all"
-                              title="Delete user"
+                              title="Delete organization"
                             >
                               <Trash2 size={16} />
                             </motion.button>
@@ -453,7 +367,7 @@ export default function AdminUser() {
 
       {/* Edit Modal */}
       <AnimatePresence>
-        {showEditModal && editingUser && (
+        {showEditModal && editingOrg && (
           <>
             <motion.div
               initial={{ opacity: 0 }}
@@ -470,19 +384,19 @@ export default function AdminUser() {
                 className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full mx-4"
               >
                 <h3 className="text-2xl font-black text-slate-800 mb-6">
-                  Edit User
+                  Edit Organization
                 </h3>
 
                 <div className="space-y-4">
                   <div>
                     <label className="block text-xs font-black text-gray-500 uppercase tracking-wider mb-2">
-                      Name
+                      Organization Name
                     </label>
                     <input
                       type="text"
-                      value={editingUser.name}
+                      value={editingOrg.name}
                       onChange={(e) =>
-                        setEditingUser({ ...editingUser, name: e.target.value })
+                        setEditingOrg({ ...editingOrg, name: e.target.value })
                       }
                       className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#6A5AFF] focus:outline-none transition-all"
                     />
@@ -494,35 +408,15 @@ export default function AdminUser() {
                     </label>
                     <input
                       type="email"
-                      value={editingUser.email}
+                      value={editingOrg.email}
                       onChange={(e) =>
-                        setEditingUser({
-                          ...editingUser,
+                        setEditingOrg({
+                          ...editingOrg,
                           email: e.target.value,
                         })
                       }
                       className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#6A5AFF] focus:outline-none transition-all"
                     />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-black text-gray-500 uppercase tracking-wider mb-2">
-                      User Type
-                    </label>
-                    <select
-                      value={editingUser.userType}
-                      onChange={(e) =>
-                        setEditingUser({
-                          ...editingUser,
-                          userType: e.target.value,
-                        })
-                      }
-                      className="w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-[#6A5AFF] focus:outline-none transition-all"
-                    >
-                      <option value="Auditor">Auditor</option>
-                      <option value="PMO">PMO</option>
-                      <option value="Admin">Admin</option>
-                    </select>
                   </div>
                 </div>
 
@@ -548,7 +442,7 @@ export default function AdminUser() {
 
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
-        {showDeleteModal && userToDelete && (
+        {showDeleteModal && orgToDelete && (
           <>
             <motion.div
               initial={{ opacity: 0 }}
@@ -569,12 +463,12 @@ export default function AdminUser() {
                 </div>
 
                 <h3 className="text-2xl font-black text-slate-800 mb-3 text-center">
-                  Delete User?
+                  Delete Organization?
                 </h3>
                 <p className="text-sm text-gray-600 text-center mb-8">
                   Are you sure you want to delete{" "}
                   <span className="font-bold text-slate-800">
-                    {userToDelete.name}
+                    {orgToDelete.name}
                   </span>
                   ? This action cannot be undone.
                 </p>
@@ -599,15 +493,15 @@ export default function AdminUser() {
         )}
       </AnimatePresence>
 
-      {/* Add User Modal */}
+      {/* Add Organization Modal */}
       <AnimatePresence>
-        {showAddUserModal && (
+        {showAddOrgModal && (
           <>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              onClick={() => setShowAddUserModal(false)}
+              onClick={() => setShowAddOrgModal(false)}
               className="fixed inset-0 bg-black/50 backdrop-blur-sm z-200 flex items-center justify-center p-4"
             >
               <motion.div
@@ -622,14 +516,14 @@ export default function AdminUser() {
                   <div className="flex justify-between items-start">
                     <div>
                       <h3 className="text-2xl font-black text-slate-800">
-                        Add Users
+                        Add Organization
                       </h3>
                       <p className="text-sm text-gray-500 mt-1">
-                        Add new Auditors, PMOs and Admins.
+                        Add a new client organization.
                       </p>
                     </div>
                     <button
-                      onClick={() => setShowAddUserModal(false)}
+                      onClick={() => setShowAddOrgModal(false)}
                       className="text-rose-500 hover:bg-rose-50 w-8 h-8 rounded-lg flex items-center justify-center transition-all"
                     >
                       ✕
@@ -639,22 +533,20 @@ export default function AdminUser() {
 
                 <div className="p-6 space-y-6">
                   <div className="flex flex-col gap-6">
-                    {/* User Type */}
+                    {/* Organization Name */}
                     <div className="w-full">
                       <label className="block text-xs font-bold text-gray-700 mb-2">
-                        User Type
+                        Organization Name
                       </label>
-                      <select
-                        value={newUser.userType}
+                      <input
+                        type="text"
+                        placeholder="Company Name"
+                        value={newOrg.name}
                         onChange={(e) =>
-                          setNewUser({ ...newUser, userType: e.target.value })
+                          setNewOrg({ ...newOrg, name: e.target.value })
                         }
-                        className="w-full px-4 py-2.5 rounded-lg bg-[#6A5AFF] text-white font-semibold text-sm focus:outline-none focus:ring-2 focus:ring-[#6A5AFF] focus:ring-offset-2 transition-all"
-                      >
-                        <option value="Auditor">Auditor</option>
-                        <option value="PMO">PMO</option>
-                        <option value="Admin">Admin</option>
-                      </select>
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-[#6A5AFF] focus:outline-none transition-all text-sm"
+                      />
                     </div>
 
                     {/* Email Address */}
@@ -664,26 +556,10 @@ export default function AdminUser() {
                       </label>
                       <input
                         type="email"
-                        placeholder="email@company.com"
-                        value={newUser.email}
+                        placeholder="management@company.com"
+                        value={newOrg.email}
                         onChange={(e) =>
-                          setNewUser({ ...newUser, email: e.target.value })
-                        }
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-[#6A5AFF] focus:outline-none transition-all text-sm"
-                      />
-                    </div>
-
-                    {/* Password */}
-                    <div className="w-full">
-                      <label className="block text-xs font-bold text-gray-700 mb-2">
-                        Password
-                      </label>
-                      <input
-                        type="password"
-                        placeholder="••••••••"
-                        value={newUser.password}
-                        onChange={(e) =>
-                          setNewUser({ ...newUser, password: e.target.value })
+                          setNewOrg({ ...newOrg, email: e.target.value })
                         }
                         className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-[#6A5AFF] focus:outline-none transition-all text-sm"
                       />
@@ -694,7 +570,7 @@ export default function AdminUser() {
                 {/* Modal Footer */}
                 <div className="sticky bottom-0 bg-white border-t border-gray-100 p-6 rounded-b-3xl flex justify-start">
                   <button
-                    onClick={saveNewUser}
+                    onClick={saveNewOrg}
                     className="px-8 py-3 bg-[#6A5AFF] text-white rounded-xl font-bold hover:bg-[#5D45FD] transition-all shadow-lg"
                   >
                     Save

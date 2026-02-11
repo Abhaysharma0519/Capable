@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   BarChart3, Users, FileText, Settings,
-  Menu, X, ShieldCheck, LogOut
+  Menu, X, ShieldCheck, LogOut, Building2, FolderKanban
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const adminNavItems = [
   { icon: <BarChart3 size={22} />, label: "Overview", path: "/admin-dashboard" },
   { icon: <Users size={22} />, label: "Users", path: "/admin/users" },
+  { icon: <Building2 size={22} />, label: "Organizations", path: "/admin/organizations" },
+  { icon: <FolderKanban size={22} />, label: "Projects", path: "/admin/projects" },
 ];
 
 const bottomItems = [
