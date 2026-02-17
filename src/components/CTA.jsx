@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion as Motion } from "framer-motion";
-import { ArrowRight, CheckCircle, ShieldCheck, Zap, Lock } from "lucide-react";
+import { ArrowRight, CheckCircle, ShieldCheck, Zap, Lock, Activity } from "lucide-react";
 
 const CTA = () => {
   const navigate = useNavigate();
@@ -12,46 +12,53 @@ const CTA = () => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: x * 15, y: y * 15 });
+    setTilt({ x: x * 10, y: y * 10 });
   };
 
   return (
-    <section className="relative py-24 sm:py-32 px-6 sm:px-12 overflow-hidden bg-white">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] pointer-events-none opacity-40">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 bg-[#6A5AFF]/10 blur-[120px] rounded-full" />
+    <section className="relative py-24 sm:py-32 px-12 overflow-hidden bg-white">
+      {/* Ambient background lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none">
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-10 blur-[150px] rounded-full" 
+          style={{ backgroundColor: themeColor }}
+        />
       </div>
 
       <div className="max-w-360 mx-auto">
         <div 
-          className="relative rounded-[3rem] bg-slate-950 p-8 sm:p-16 lg:p-24 overflow-hidden shadow-2xl"
+          className="relative rounded-[4rem] bg-slate-950 p-10 sm:p-20 lg:p-28 overflow-hidden shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border border-white/5"
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setTilt({ x: 0, y: 0 })}
         >
-          {/* Grid Pattern Overlay */}
-          <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(#6A5AFF_1px,transparent_1px),linear-gradient(90deg,#6A5AFF_1px,transparent_1px)] bg-size-[40px_40px]" />
+          {/* Refined Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(#6A5AFF_1px,transparent_1px)] bg-size-[30px_30px]" />
           
-          <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="relative z-10 grid lg:grid-cols-2 gap-20 items-center">
             
             {/* Left Side: Content */}
             <Motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#6A5AFF]/10 border border-[#6A5AFF]/20 text-[#6A5AFF] text-sm font-bold mb-8">
-                <Zap size={16} />
-                READY TO SCALE?
+              <div 
+                className="inline-flex items-center gap-2 px-5 py-2 rounded-full border text-[10px] font-black tracking-[0.2em] mb-10 transition-colors"
+                style={{ backgroundColor: `${themeColor}10`, borderColor: `${themeColor}30`, color: themeColor }}
+              >
+                <Zap size={14} className="animate-pulse" />
+                SYSTEM READY FOR ONBOARDING
               </div>
               
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-[1.1] mb-8">
+              <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.05] tracking-tighter mb-10">
                 Stop chasing evidence. <br />
                 <span style={{ color: themeColor }}>Start scaling trust.</span>
               </h2>
               
-              <p className="text-lg sm:text-xl text-slate-400 mb-10 leading-relaxed max-w-xl">
-                Join 1,000+ organizations automating their compliance journey with Capable. 
-                Get audit-ready in weeks, not months.
+              <p className="text-xl text-slate-400 mb-12 leading-relaxed max-w-lg text-justify">
+                Join 1,000+ organizations scaling their manual compliance with Capable. 
+                Get audit-ready in weeks with high-fidelity control management.
               </p>
 
               <form 
@@ -59,90 +66,106 @@ const CTA = () => {
                   e.preventDefault();
                   navigate(`/login?email=${encodeURIComponent(e.target.email.value)}`);
                 }}
-                className="flex flex-col sm:flex-row gap-4 max-w-lg"
+                className="flex flex-col sm:flex-row gap-4 max-w-xl group"
               >
                 <input
                   type="email"
                   name="email"
                   required
                   placeholder="Enter your work email"
-                  className="flex-1 bg-slate-900 border border-slate-800 text-white px-6 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#6A5AFF] transition-all"
+                  className="flex-1 bg-white/5 border border-slate-800 text-white px-8 py-5 rounded-4xl focus:outline-none focus:border-[#6A5AFF] focus:bg-white/10 transition-all font-bold"
                 />
                 <button
                   type="submit"
-                  className="bg-[#6A5AFF] hover:bg-[#5849d8] text-white px-8 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95"
+                  className="px-10 py-5 rounded-4xl font-black text-lg flex items-center justify-center gap-3 transition-all shadow-2xl hover:scale-105 active:scale-95 group"
+                  style={{ backgroundColor: themeColor, color: 'white' }}
                 >
-                  Get Started <ArrowRight size={20} />
+                  Get Started 
+                  <ArrowRight size={22} className="group-hover:translate-x-2 transition-transform" />
                 </button>
               </form>
 
-              <div className="mt-8 flex flex-wrap gap-6 items-center">
-                <div className="flex items-center gap-2 text-slate-400 text-sm">
-                  <CheckCircle size={16} className="text-green-500" /> No credit card required
+              <div className="mt-12 flex flex-wrap gap-8 items-center">
+                <div className="flex items-center gap-3 text-slate-500 text-xs font-bold uppercase tracking-widest">
+                  <CheckCircle size={18} style={{ color: themeColor }} /> No credit card
                 </div>
-                <div className="flex items-center gap-2 text-slate-400 text-sm">
-                  <CheckCircle size={16} className="text-green-500" /> SOC2/ISO 27001 ready
+                <div className="flex items-center gap-3 text-slate-500 text-xs font-bold uppercase tracking-widest">
+                  <CheckCircle size={18} style={{ color: themeColor }} /> Audit Vetted
                 </div>
               </div>
             </Motion.div>
 
-            {/* Right Side: Floating UI Element */}
+            {/* Right Side: Floating High-Tech HUD */}
             <Motion.div 
               className="hidden lg:block relative"
-              style={{ perspective: "1000px" }}
+              style={{ perspective: "2000px" }}
             >
               <Motion.div
                 style={{
                   rotateX: tilt.y,
                   rotateY: -tilt.x,
-                  transition: "transform 0.1s ease-out"
+                  transition: "transform 0.2s ease-out"
                 }}
-                className="bg-slate-900/50 backdrop-blur-xl border border-slate-800 rounded-3xl p-10 shadow-3xl"
+                className="bg-slate-900/40 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-12 shadow-[0_0_80px_-20px_rgba(106,90,255,0.3)] relative overflow-hidden"
               >
-                <div className="flex items-center justify-between mb-12">
+                {/* Mac traffic lights */}
+                <div className="flex items-center justify-between mb-16">
                   <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
+                    <div className="w-3 h-3 rounded-full bg-[#FF5F57] shadow-inner" />
+                    <div className="w-3 h-3 rounded-full bg-[#FEBC2E] shadow-inner" />
+                    <div className="w-3 h-3 rounded-full bg-[#28C840] shadow-inner" />
                   </div>
-                  <div className="px-3 py-1 rounded bg-green-500/10 text-green-500 text-[10px] font-bold uppercase tracking-widest border border-green-500/20">
-                    Live System
+                  <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 text-[9px] font-black uppercase tracking-[0.2em]">
+                    <span className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
+                    Live Engine
                   </div>
                 </div>
 
-                <div className="space-y-8">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-6">
+                <div className="space-y-10">
+                  <div className="flex items-center justify-between border-b border-white/5 pb-8">
                     <div>
-                      <div className="text-slate-500 text-xs mb-1 uppercase tracking-tight">Active Frameworks</div>
-                      <div className="text-2xl font-bold text-white">14 Frameworks</div>
+                      <div className="text-slate-500 text-[10px] font-black mb-1 uppercase tracking-widest">Expert Governance</div>
+                      <div className="text-3xl font-black text-white tracking-tighter">18 Frameworks</div>
                     </div>
-                    <div className="p-3 bg-[#6A5AFF]/10 rounded-2xl text-[#6A5AFF]">
-                      <ShieldCheck size={32} />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
-                      <div className="text-slate-500 text-[10px] mb-1">EVIDENCE STATUS</div>
-                      <div className="text-white font-bold tracking-tight">98.2% Auto-Sync</div>
-                    </div>
-                    <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700">
-                      <div className="text-slate-500 text-[10px] mb-1">AUDIT READINESS</div>
-                      <div className="text-green-400 font-bold tracking-tight">Vetted</div>
+                    <div 
+                      className="p-4 rounded-3xl shadow-lg"
+                      style={{ backgroundColor: `${themeColor}20`, color: themeColor }}
+                    >
+                      <ShieldCheck size={36} />
                     </div>
                   </div>
 
-                  <div className="p-4 bg-[#6A5AFF]/5 border border-[#6A5AFF]/20 rounded-2xl flex items-center gap-4">
-                     <div className="w-10 h-10 rounded-full bg-[#6A5AFF] flex items-center justify-center text-white">
-                        <Lock size={18} />
+                  <div className="grid grid-cols-2 gap-6">
+                    <div className="bg-white/5 p-5 rounded-2xl border border-white/5 group-hover:border-white/10 transition-colors">
+                      <div className="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-2">Sync Status</div>
+                      <div className="text-white font-black text-lg">Verified</div>
+                    </div>
+                    <div className="bg-white/5 p-5 rounded-2xl border border-white/5">
+                      <div className="text-slate-500 text-[9px] font-bold uppercase tracking-widest mb-2">System Health</div>
+                      <div className="text-emerald-400 font-black text-lg">Optimal</div>
+                    </div>
+                  </div>
+
+                  <div className="p-5 bg-white/5 border border-white/10 rounded-3xl flex items-center gap-5">
+                     <div 
+                       className="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-lg"
+                       style={{ backgroundColor: themeColor }}
+                     >
+                        <Activity size={22} className="animate-pulse" />
                      </div>
-                     <div className="text-sm text-slate-300 font-medium">Controls encrypted & locked</div>
+                     <div>
+                        <div className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Active Monitoring</div>
+                        <div className="text-sm text-slate-200 font-bold">Encrypted Control Layer</div>
+                     </div>
                   </div>
                 </div>
               </Motion.div>
 
-              {/* Decorative Blur Background for UI */}
-              <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#6A5AFF]/20 blur-[100px] rounded-full" />
+              {/* Underlying Glow */}
+              <div 
+                className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-30 blur-[120px] rounded-full" 
+                style={{ backgroundColor: themeColor }}
+              />
             </Motion.div>
 
           </div>

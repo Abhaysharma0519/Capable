@@ -35,3 +35,5 @@
 body {
   overflow-x: hidden; /* Prevents scrollbars during horizontal animations */
 }
+
+@keyframes scan-move { 0% { top: 0% } 100% { top: 100% } }

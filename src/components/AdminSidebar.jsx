@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   BarChart3, Users, FileText, Settings,
   Menu, X, ShieldCheck, LogOut, Building2, FolderKanban
@@ -11,6 +11,7 @@ const adminNavItems = [
   { icon: <Users size={22} />, label: "Users", path: "/admin/users" },
   { icon: <Building2 size={22} />, label: "Organizations", path: "/admin/organizations" },
   { icon: <FolderKanban size={22} />, label: "Projects", path: "/admin/projects" },
+  { icon: <FileText size={22} />, label: "Compliances", path: "/admin/compliances" },
 ];
 
 const bottomItems = [
@@ -19,7 +20,6 @@ const bottomItems = [
 ];
 
 const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handleLogout = () => {
