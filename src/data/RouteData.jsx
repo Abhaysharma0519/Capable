@@ -9,7 +9,6 @@ export const allPagesData = {
   "personnel-access": { title: "Personnel & Access", category: "Platform" },
 
   // Features (4 pages)
-  "ai-evidence-collector": { title: "AI Evidence Collector", category: "Features" },
   "smart-mapping": { title: "Smart Mapping", category: "Features" },
   "audit-dashboards": { title: "Audit Dashboards", category: "Features" },
   "task-automation": { title: "Task Automation", category: "Features" },

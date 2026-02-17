@@ -9,7 +9,6 @@ import {
   Globe,
   Cpu,
   Users,
-  BookOpen,
   Activity,
   Lock,
   CheckCircle,
@@ -18,11 +17,10 @@ import {
   Briefcase,
   Zap,
   BarChart,
-  FileText,
-  Megaphone,
   Terminal,
   ShieldAlert,
   Fingerprint,
+  ArrowRight
 } from "lucide-react";
 
 const Header = () => {
@@ -31,7 +29,6 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
 
-  // ✅ Working slug mapper
   const createSlug = (label, title) => {
     const key = `${label}|${title}`;
     const routes = {
@@ -41,17 +38,13 @@ const Header = () => {
       "Platform|Risk Management": "/platform/risk-management",
       "Platform|Trust Center": "/platform/trust-center",
       "Platform|Personnel & Access": "/platform/personnel-access",
-
-      "Features|AI Evidence Collector": "/features/ai-evidence-collector",
       "Features|Smart Mapping": "/features/smart-mapping",
       "Features|Audit Dashboards": "/features/audit-dashboards",
       "Features|Task Automation": "/features/task-automation",
-
       "Company|About": "/company/about",
       "Company|Contact Us": "/company/contact",
       "Company|Partners": "/company/partners",
       "Company|Terms": "/company/terms",
-
       "Frameworks|ISO/IEC 27001:2022": "/frameworks/iso-27001",
       "Frameworks|ISO 22301:2019": "/frameworks/iso-22301",
       "Frameworks|ISO/IEC 33001:2015": "/frameworks/iso-33001",
@@ -78,113 +71,53 @@ const Header = () => {
     {
       label: "Platform",
       children: [
-        {
-          title: "Authentic Compliance",
-          desc: "Verifiable, real-time proof of security.",
-          icon: <Shield className="w-5 h-5" />,
-        },
-        {
-          title: "Continuous GRC",
-          desc: "Governance, Risk, and Compliance at scale.",
-          icon: <Activity className="w-5 h-5" />,
-        },
-        {
-          title: "Third Party Risk",
-          desc: "Assess and manage vendor vulnerabilities.",
-          icon: <Users className="w-5 h-5" />,
-        },
-        {
-          title: "Risk Management",
-          desc: "Identify threats before they become issues.",
-          icon: <ShieldAlert className="w-5 h-5" />,
-        },
-        {
-          title: "Trust Center",
-          desc: "Publicly showcase your security posture.",
-          icon: <Globe className="w-5 h-5" />,
-        },
-        {
-          title: "Personnel & Access",
-          desc: "Manage identity and access controls.",
-          icon: <Fingerprint className="w-5 h-5" />,
-        },
+        { title: "Authentic Compliance", desc: "Verifiable, real-time proof.", icon: <Shield /> },
+        { title: "Continuous GRC", desc: "Governance at scale.", icon: <Activity /> },
+        { title: "Third Party Risk", desc: "Manage vendor risk.", icon: <Users /> },
+        { title: "Risk Management", desc: "Identify threats early.", icon: <ShieldAlert /> },
+        { title: "Trust Center", desc: "Public security portal.", icon: <Globe /> },
+        { title: "Personnel & Access", desc: "Manage access controls.", icon: <Fingerprint /> },
       ],
     },
     {
       label: "Frameworks",
       isMega: true,
       children: [
-        { title: "ISO/IEC 27001:2022", icon: <Shield className="w-5 h-5" /> },
-        { title: "ISO 22301:2019", icon: <Shield className="w-5 h-5" /> },
-        { title: "ISO/IEC 33001:2015", icon: <Shield className="w-5 h-5" /> },
-        { title: "ISO/IEC 42001:2023", icon: <Shield className="w-5 h-5" /> },
-        { title: "ISO 14001:2015", icon: <Shield className="w-5 h-5" /> },
-        { title: "ISO/IEC 27701:2025", icon: <Shield className="w-5 h-5" /> },
-        { title: "GDPR", icon: <Lock className="w-5 h-5" /> },
-        { title: "DPDPA", icon: <Lock className="w-5 h-5" /> },
-        { title: "PDPL", icon: <Lock className="w-5 h-5" /> },
-        { title: "HIPAA", icon: <Lock className="w-5 h-5" /> },
-        { title: "PCI DSS", icon: <Lock className="w-5 h-5" /> },
-        { title: "CCPA", icon: <Lock className="w-5 h-5" /> },
-        { title: "SOC1/SOC2/SOC3", icon: <CheckCircle className="w-5 h-5" /> },
-        { title: "FedRAMP", icon: <CheckCircle className="w-5 h-5" /> },
-        { title: "HITRUST", icon: <CheckCircle className="w-5 h-5" /> },
-        { title: "NIST CSF", icon: <CheckCircle className="w-5 h-5" /> },
-        { title: "CISA Assessment", icon: <CheckCircle className="w-5 h-5" /> },
-        {
-          title: "Cloud Security Assessments",
-          icon: <CheckCircle className="w-5 h-5" />,
-        },
+        { title: "ISO/IEC 27001:2022", icon: <Shield /> },
+        { title: "ISO 22301:2019", icon: <Shield /> },
+        { title: "ISO/IEC 33001:2015", icon: <Shield /> },
+        { title: "ISO/IEC 42001:2023", icon: <Shield /> },
+        { title: "ISO 14001:2015", icon: <Shield /> },
+        { title: "ISO/IEC 27701:2025", icon: <Shield /> },
+        { title: "GDPR", icon: <Lock /> },
+        { title: "DPDPA", icon: <Lock /> },
+        { title: "PDPL", icon: <Lock /> },
+        { title: "HIPAA", icon: <Lock /> },
+        { title: "PCI DSS", icon: <Lock /> },
+        { title: "CCPA", icon: <Lock /> },
+        { title: "SOC1/SOC2/SOC3", icon: <CheckCircle /> },
+        { title: "FedRAMP", icon: <CheckCircle /> },
+        { title: "HITRUST", icon: <CheckCircle /> },
+        { title: "NIST CSF", icon: <CheckCircle /> },
+        { title: "CISA Assessment", icon: <CheckCircle /> },
+        { title: "Cloud Security Assessments", icon: <CheckCircle /> },
       ],
     },
     {
       label: "Features",
       children: [
-        {
-          title: "AI Evidence Collector",
-          desc: "Automate logs and screenshots.",
-          icon: <Cpu className="w-5 h-5" />,
-        },
-        {
-          title: "Smart Mapping",
-          desc: "One control to multiple frameworks.",
-          icon: <Layers className="w-5 h-5" />,
-        },
-        {
-          title: "Audit Dashboards",
-          desc: "Direct access portal for auditors.",
-          icon: <BarChart className="w-5 h-5" />,
-        },
-        {
-          title: "Task Automation",
-          desc: "Zero-touch compliance workflows.",
-          icon: <Zap className="w-5 h-5" />,
-        },
+        { title: "Smart Mapping", desc: "One control, many frameworks.", icon: <Layers /> },
+        { title: "Audit Dashboards", desc: "Direct auditor access.", icon: <BarChart /> },
+        { title: "Task Automation", desc: "Zero-touch workflows.", icon: <Zap /> },
       ],
     },
     {
       label: "Company",
       children: [
-        {
-          title: "About",
-          desc: "Our mission and team.",
-          icon: <ShieldCheck className="w-5 h-5" />,
-        },
-        {
-          title: "Contact Us",
-          desc: "Get in touch with support.",
-          icon: <MessageSquare className="w-5 h-5" />,
-        },
-        {
-          title: "Partners",
-          desc: "Join our ecosystem.",
-          icon: <Briefcase className="w-5 h-5" />,
-        },
-        {
-          title: "Terms",
-          desc: "Legal & Privacy documents.",
-          icon: <Terminal className="w-5 h-5" />,
-        },
+        { title: "About", desc: "Our mission.", icon: <ShieldCheck /> },
+        { title: "Contact Us", desc: "Get in touch.", icon: <MessageSquare /> },
+        { title: "Partners", desc: "Join our ecosystem.", icon: <Briefcase /> },
+        { title: "Terms", desc: "Legal docs.", icon: <Terminal /> },
       ],
     },
   ];
@@ -192,97 +125,84 @@ const Header = () => {
   const handleNavigation = (label, title) => {
     const path = createSlug(label, title);
     navigate(path);
-    setIsMobileMenuOpen(false); // Ensure menu closes on mobile
-    setActiveDropdown(null); // Ensure dropdown closes on desktop click
+    setIsMobileMenuOpen(false);
+    setActiveDropdown(null);
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 w-full z-50 bg-white/95 backdrop-blur-xl border-b border-slate-100 font-sans">
-      <div className="max-w-360 mx-auto px-12 h-25 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 w-full z-50 bg-white/80 backdrop-blur-2xl border-b border-slate-100/50 transition-all duration-300">
+      <div className="max-w-360 mx-auto px-12 h-20 flex items-center justify-between">
         {/* LOGO */}
         <div
-          className="flex items-center gap-2 font-bold text-2xl tracking-tighter cursor-pointer group"
-          style={{ color: themeColor }}
+          className="flex items-center gap-2 font-black text-2xl tracking-tighter cursor-pointer group"
           onClick={() => navigate("/")}
         >
-          <div className="p-1.5 rounded-lg bg-[#6A5AFF]/10 group-hover:bg-[#6A5AFF]/20 transition-colors">
-            <ShieldCheck className="w-10 h-10" />
+          <div className="p-1.5 rounded-xl bg-[#6A5AFF] text-white shadow-lg shadow-[#6A5AFF]/20 transition-transform group-hover:rotate-6">
+            <ShieldCheck size={28} />
           </div>
-          <span className="text-slate-900 group-hover:text-[#6A5AFF] transition-colors">
-            Capable
-          </span>
+          <span className="text-slate-950">Capable</span>
         </div>
 
         {/* DESKTOP NAV */}
-        <div className="hidden lg:flex items-center gap-2 h-full">
+        <div className="hidden lg:flex items-center gap-1">
           {navItems.map((item, idx) => (
             <div
               key={idx}
-              className="relative h-full flex items-center"
+              className="relative h-20 flex items-center"
               onMouseEnter={() => setActiveDropdown(idx)}
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <button
-                className={`flex items-center gap-1.5 text-[16px] font-semibold transition-all px-4 py-2 rounded-full ${activeDropdown === idx ? "text-[#6A5AFF] bg-slate-50" : "text-black hover:text-[#6A5AFF]"}`}
+                className={`flex items-center gap-1 text-[15px] font-bold px-4 py-2 rounded-full transition-all ${
+                  activeDropdown === idx ? "text-[#6A5AFF] bg-[#6A5AFF]/5" : "text-slate-600 hover:text-slate-900"
+                }`}
               >
                 {item.label}
-                <ChevronDown
-                  className={`w-5 h-5 transition-transform duration-100 ${activeDropdown === idx ? "rotate-180" : ""}`}
-                />
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === idx ? "rotate-180" : ""}`} />
               </button>
 
-              {/* DROPDOWN BOX */}
+              {/* DROPDOWN MENU */}
               {activeDropdown === idx && (
-                <div
-                  className={`absolute top-[80%] pt-4 z-50 ${item.isMega ? "-left-50 w-225" : "left-0 w-85"}`}
-                >
-                  <div className="bg-white border border-slate-100 shadow-[0px_25px_60px_rgba(0,0,0,0.12)] rounded-3xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className={`absolute top-[80%] pt-2 z-50 ${item.isMega ? "-left-60 w-225" : "left-0 w-80"}`}>
+                  <div className="bg-white border border-slate-100 shadow-[0px_30px_90px_rgba(0,0,0,0.1)] rounded-4xl overflow-hidden p-6 animate-in fade-in slide-in-from-top-4 duration-300">
                     {item.isMega ? (
-                      <div className="p-8 bg-white">
-                        <h4 className="text-[11px] uppercase tracking-widest font-extrabold text-slate-400 mb-8 px-4">
-                          Frameworks
-                        </h4>
-                        <div className="grid grid-cols-3 gap-y-2 gap-x-4">
-                          {item.children.map((framework, fIdx) => (
-                            <div
-                              key={fIdx}
-                              className="flex items-center gap-4 p-3.5 rounded-2xl hover:bg-slate-50 transition-all cursor-pointer group/item"
-                              onClick={() =>
-                                handleNavigation(item.label, framework.title)
-                              }
-                            >
-                              <div className="p-2.5 rounded-xl bg-slate-50 text-slate-400 group-hover/item:text-[#6A5AFF] group-hover/item:bg-[#6A5AFF]/10 transition-all shadow-sm">
-                                {framework.icon}
-                              </div>
-                              <span className="text-[14px] font-bold text-slate-800 group-hover/item:text-[#6A5AFF] transition-colors">
-                                {framework.title}
-                              </span>
+                      <div className="grid grid-cols-3 gap-x-6 gap-y-2">
+                         <div className="col-span-3 mb-6 px-4 flex items-center justify-between">
+                            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Supported Frameworks</h4>
+                            <div className="h-px flex-1 mx-6 bg-slate-100" />
+                         </div>
+                        {item.children.map((framework, fIdx) => (
+                          <div
+                            key={fIdx}
+                            className="flex items-center gap-4 p-3 rounded-2xl hover:bg-slate-50 transition-all cursor-pointer group/item"
+                            onClick={() => handleNavigation(item.label, framework.title)}
+                          >
+                            <div className="w-10 h-10 shrink-0 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover/item:text-[#6A5AFF] group-hover/item:bg-[#6A5AFF]/10 transition-all border border-transparent group-hover/item:border-[#6A5AFF]/20 shadow-sm">
+                              {React.cloneElement(framework.icon, { size: 20 })}
                             </div>
-                          ))}
-                        </div>
+                            <span className="text-[13px] font-bold text-slate-700 group-hover/item:text-[#6A5AFF] transition-colors">
+                              {framework.title}
+                            </span>
+                          </div>
+                        ))}
                       </div>
                     ) : (
-                      <div className="p-4 grid gap-1">
+                      <div className="space-y-1">
                         {item.children.map((child, cIdx) => (
                           <div
                             key={cIdx}
-                            onClick={() =>
-                              handleNavigation(item.label, child.title)
-                            }
-                            className="flex items-start gap-4 p-3.5 rounded-2xl hover:bg-slate-50 transition-all cursor-pointer group/item"
+                            onClick={() => handleNavigation(item.label, child.title)}
+                            className="flex items-start gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-all cursor-pointer group/item"
                           >
-                            <div className="mt-0.5 p-2 rounded-xl bg-slate-50 text-slate-400 group-hover/item:text-[#6A5AFF] group-hover/item:bg-[#6A5AFF]/10 transition-colors shadow-sm">
-                              {child.icon}
+                            <div className="p-2.5 rounded-xl bg-slate-50 text-slate-400 group-hover/item:text-[#6A5AFF] group-hover/item:bg-[#6A5AFF]/10 transition-all border border-transparent group-hover/item:border-[#6A5AFF]/20">
+                              {React.cloneElement(child.icon, { size: 20 })}
                             </div>
                             <div>
-                              <div className="text-[14px] font-bold text-slate-800 group-hover/item:text-[#6A5AFF] transition-colors">
+                              <div className="text-[14px] font-black text-slate-800 group-hover/item:text-[#6A5AFF] transition-colors flex items-center gap-2">
                                 {child.title}
+                                <ArrowRight className="w-3 h-3 opacity-0 group-hover/item:opacity-100 -translate-x-2 group-hover/item:translate-x-0 transition-all" />
                               </div>
-                              {child.desc && (
-                                <div className="text-[12px] text-slate-500 leading-relaxed mt-0.5">
-                                  {child.desc}
-                                </div>
-                              )}
+                              <p className="text-[12px] text-slate-500 font-medium leading-relaxed mt-0.5">{child.desc}</p>
                             </div>
                           </div>
                         ))}
@@ -295,74 +215,48 @@ const Header = () => {
           ))}
         </div>
 
-        {/* AUTH */}
-        <div className="hidden lg:flex items-center gap-6">
-          <button
-            onClick={() => navigate("/login")}
-            className="text-sm font-bold text-slate-600 hover:text-[#6A5AFF] transition-colors"
-          >
+        {/* ACTIONS */}
+        <div className="hidden lg:flex items-center gap-8">
+          <button onClick={() => navigate("/login")} className="text-sm font-black text-slate-500 hover:text-slate-900 transition-colors uppercase tracking-widest">
             Login
           </button>
           <button
-            onClick={() => navigate("/login")}
-            className="text-white px-7 py-3 rounded-full text-sm font-bold transition-all shadow-lg shadow-[#6A5AFF]/20 hover:shadow-[#6A5AFF]/40 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
+            onClick={() => navigate("/request-demo")}
+            className="px-8 py-3.5 rounded-full text-sm font-black text-white shadow-xl transition-all hover:scale-105 active:scale-95 shadow-[#6A5AFF]/20"
             style={{ backgroundColor: themeColor }}
           >
-            Request Demo
+            Request a demo
           </button>
         </div>
 
-        {/* MOBILE TOGGLE */}
-        <button
-          className="lg:hidden p-2 text-slate-600"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        {/* MOBILE TRIGGER */}
+        <button className="lg:hidden p-2 text-slate-900" onClick={() => setIsMobileMenuOpen(true)}>
+          <Menu size={28} />
         </button>
       </div>
 
       {/* MOBILE MENU */}
-      <div
-        className={`fixed inset-0 bg-white z-60 transform ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"} transition-transform duration-500 ease-in-out lg:hidden overflow-y-auto`}
-      >
-        <div className="p-8 flex flex-col min-h-full">
-          <div className="flex justify-between items-center mb-12">
-            <div
-              className="flex items-center gap-2 font-bold text-2xl cursor-pointer"
-              style={{ color: themeColor }}
-              onClick={() => {
-                navigate("/");
-                setIsMobileMenuOpen(false);
-              }}
-            >
-              <ShieldCheck className="w-8 h-8" />
-              <span className="text-slate-900">Capable</span>
+      <div className={`fixed inset-0 bg-white z-100 transform ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"} transition-transform duration-500 ease-in-out lg:hidden overflow-y-auto`}>
+        <div className="p-8 pb-20">
+          <div className="flex justify-between items-center mb-16">
+            <div className="flex items-center gap-2 font-black text-2xl tracking-tighter" style={{ color: themeColor }} onClick={() => { navigate("/"); setIsMobileMenuOpen(false); }}>
+              <ShieldCheck size={32} />
+              <span className="text-slate-900 uppercase">Capable</span>
             </div>
-            <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="p-2 bg-slate-50 rounded-full"
-            >
+            <button onClick={() => setIsMobileMenuOpen(false)} className="p-3 bg-slate-50 rounded-full">
               <X size={24} />
             </button>
           </div>
 
-          <div className="space-y-10">
+          <div className="space-y-12">
             {navItems.map((item, idx) => (
               <div key={idx}>
-                <div className="text-[11px] uppercase tracking-[0.2em] font-black text-slate-300 mb-5">
-                  {item.label}
-                </div>
-                <div className="grid grid-cols-1 gap-6 pl-2">
+                <h4 className="text-[10px] uppercase font-black tracking-[0.3em] text-slate-300 mb-6">{item.label}</h4>
+                <div className="grid gap-6">
                   {item.children.map((c, i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-3 cursor-pointer"
-                      onClick={() => handleNavigation(item.label, c.title)}
-                    >
-                      <div className="text-[#6A5AFF]">{c.icon}</div>
-                      <div className="text-lg font-bold text-slate-800">
-                        {c.title}
-                      </div>
+                    <div key={i} className="flex items-center gap-4 cursor-pointer group" onClick={() => handleNavigation(item.label, c.title)}>
+                      <div className="w-10 h-10 rounded-xl bg-slate-50 flex items-center justify-center text-[#6A5AFF]">{c.icon}</div>
+                      <div className="text-lg font-black text-slate-800">{c.title}</div>
                     </div>
                   ))}
                 </div>
@@ -370,26 +264,9 @@ const Header = () => {
             ))}
           </div>
 
-          <div className="mt-12 pt-10 border-t border-slate-100 flex flex-col gap-4 pb-10">
-            <button
-              onClick={() => {
-                navigate("/login");
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full py-4 rounded-2xl border border-slate-200 font-bold text-slate-800"
-            >
-              Login
-            </button>
-            <button
-              onClick={() => {
-                navigate("/login");
-                setIsMobileMenuOpen(false);
-              }}
-              className="w-full py-4 rounded-2xl text-white font-bold shadow-xl"
-              style={{ backgroundColor: themeColor }}
-            >
-              Request Demo
-            </button>
+          <div className="mt-16 pt-10 border-t border-slate-100 flex flex-col gap-4">
+            <button onClick={() => { navigate("/login"); setIsMobileMenuOpen(false); }} className="w-full py-5 rounded-2xl border-2 border-slate-100 font-black text-slate-800 text-lg uppercase tracking-widest">Login</button>
+            <button onClick={() => { navigate("/request-demo"); setIsMobileMenuOpen(false); }} className="w-full py-5 rounded-2xl text-white font-black text-lg shadow-2xl uppercase tracking-widest" style={{ backgroundColor: themeColor }}>Request Demo</button>
           </div>
         </div>
       </div>
