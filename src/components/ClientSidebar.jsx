@@ -7,11 +7,10 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-  { icon: <LayoutGrid size={22} />, label: "Compliances", path: "/dashboard", badge: "3" },
+  { icon: <LayoutGrid size={22} />, label: "Projects", path: "/dashboard", badge: "3" },
 ];
 
 const bottomItems = [
-  { icon: <FileText size={20} />, label: "Documentation", path: "/docs" },
   { icon: <Settings size={20} />, label: "Settings", path: "/settings" },
 ];
 

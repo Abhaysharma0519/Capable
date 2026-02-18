@@ -61,7 +61,7 @@ export default function Loginotp() {
 
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("user_email", localStorage.getItem("pending_email") || "abhaysharmans7234@gmail.com");
-        localStorage.setItem("user_name", role === "admin" ? "Admin Abhay" : role === "pmo" ? "PMO User" : "Abhay Sharma");
+        localStorage.setItem("user_name", role === "admin" ? "Admin Abhay" : role === "pmo" ? "PMO User" : role === "auditor" ? "Auditor User" : "Abhay Sharma");
         localStorage.setItem("user_role", role); // Store role permanently
 
         localStorage.removeItem("valid_otp");
@@ -72,6 +72,8 @@ export default function Loginotp() {
           navigate("/admin-dashboard");
         } else if (role === "pmo") {
           navigate("/pmo-dashboard");
+        } else if (role === "auditor") {
+          navigate("/auditor-dashboard");
         } else {
           navigate("/dashboard");
         }

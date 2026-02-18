@@ -16,7 +16,7 @@ const ContentPage = () => {
     <div className="min-h-screen bg-white">
       <Header />
       <main className="pt-32 pb-20 px-8 max-w-6xl mx-auto">
-        <div className="bg-slate-50 border border-slate-100 rounded-[32px] p-12 shadow-sm">
+        <div className="bg-slate-50 border border-slate-100 rounded-4xl p-12 shadow-sm">
           <span className="text-[#6A5AFF] font-bold text-xs uppercase tracking-widest px-3 py-1 bg-white border border-slate-200 rounded-full">
             {page.category}
           </span>
