@@ -305,12 +305,6 @@ export default function ComplianceDashboard() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-          <StatCard title="Active Controls" value="279" trend="+12%" icon={CheckCircle2} color="bg-emerald-500" />
-          <StatCard title="Pending Audits" value="04" trend="Steady" icon={Clock} color="bg-blue-500" />
-          <StatCard title="Risk Alerts" value="02" trend="-5%" icon={AlertCircle} color="bg-rose-500" />
-        </div>
-
         <motion.div className="bg-[#6A5AFF] rounded-4xl p-10 text-white relative shadow-xl overflow-hidden mb-10">
           <div className="relative z-10 text-left">
             <p className="text-[11px] font-black uppercase opacity-70 tracking-[0.2em]">System Access Granted</p>

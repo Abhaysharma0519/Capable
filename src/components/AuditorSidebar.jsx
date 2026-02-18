@@ -1,26 +1,25 @@
 import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
-  BarChart3, Users, FileText, Settings,
-  Menu, X, Briefcase, LogOut, FolderKanban, TrendingUp
+  LayoutGrid, FileText, Settings, Menu, X,
+  ShieldCheck, LogOut
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const pmoNavItems = [
-  { icon: <BarChart3 size={22} />, label: "Overview", path: "/pmo-dashboard" },
-  { icon: <Users size={22} />, label: "Users", path: "/pmo/users" },
-  { icon: <FolderKanban size={22} />, label: "Organizations", path: "/pmo/organizations" },
-  { icon: <TrendingUp size={22} />, label: "Projects", path: "/pmo/projects" },
-  { icon: <FileText size={22} />, label: "Compliances", path: "/pmo/compliances" },
+const navItems = [
+  { icon: <LayoutGrid size={22} />, label: "Overview", path: "/auditor-dashboard", badge: null },
+  { icon: <FileText size={22} />, label: "Compliances", path: "/auditor/compliances", badge: "5" },
 ];
 
 const bottomItems = [
-  { icon: <Settings size={20} />, label: "Settings", path: "/pmo/settings" },
+  { icon: <Settings size={20} />, label: "Settings", path: "/auditor/settings" },
 ];
 
 const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
+  const location = useLocation();
   const navigate = useNavigate();
 
+  // Handle Logout Logic
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("user_name");
@@ -30,7 +29,7 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
   };
 
   return (
-    <div className="flex flex-col h-full py-6 select-none bg-white">
+    <div className="flex flex-col h-full py-6 select-none">
       {/* 1. BRAND SECTION */}
       <div className={`px-5 mb-10 flex items-center gap-3 ${!isHovered && !mobile ? "justify-center" : "justify-start"}`}>
         <motion.div
@@ -38,7 +37,7 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
           className="relative shrink-0 cursor-pointer"
         >
           <div className="bg-[#6A5AFF] p-2.5 rounded-2xl text-white shadow-lg shadow-indigo-200">
-            <Briefcase size={24} strokeWidth={2.5} />
+            <ShieldCheck size={24} strokeWidth={2.5} />
           </div>
         </motion.div>
         {(isHovered || mobile) && (
@@ -47,15 +46,15 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
             animate={{ opacity: 1, x: 0 }}
             className="flex flex-col"
           >
-            <span className="font-black text-xl text-slate-900 tracking-tight leading-none uppercase">Capable</span>
-            <span className="text-[10px] font-bold text-[#6A5AFF] uppercase tracking-[0.2em] mt-1">PMO Console</span>
+            <span className="font-black text-xl text-slate-900 tracking-tight leading-none">Capable</span>
+            <span className="text-[10px] font-bold text-[#6A5AFF] uppercase tracking-[0.2em] mt-1">Audit Portal</span>
           </motion.div>
         )}
       </div>
 
       {/* 2. MAIN NAV */}
       <nav className="flex-1 px-3 space-y-1.5">
-        {pmoNavItems.map((item) => (
+        {navItems.map((item) => (
           <NavLink
             key={item.label}
             to={item.path}
@@ -71,11 +70,22 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
             <motion.span whileHover={{ scale: 1.1 }} className="shrink-0">{item.icon}</motion.span>
 
             {(isHovered || mobile) && (
-              <motion.div initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} className="flex flex-1 justify-between items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -5 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex flex-1 justify-between items-center"
+              >
                 <span className="text-sm font-bold whitespace-nowrap">{item.label}</span>
+                {item.badge && (
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-lg transition-colors ${location.pathname === item.path ? "bg-white/20 text-white" : "bg-indigo-100 text-[#6A5AFF]"
+                    }`}>
+                    {item.badge}
+                  </span>
+                )}
               </motion.div>
             )}
 
+            {/* Tooltip for collapsed state */}
             {!isHovered && !mobile && (
               <div className="absolute left-20 bg-slate-900 text-white text-[10px] px-2 py-1.5 rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-all transform -translate-x-2.5 group-hover:translate-x-0 font-bold uppercase tracking-widest z-50 whitespace-nowrap shadow-xl">
                 {item.label}
@@ -88,7 +98,7 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
       {/* 3. FOOTER SECTION */}
       <div className="px-3 pt-6 border-t border-slate-100 space-y-1">
         <p className={`text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 transition-all ${!isHovered && !mobile ? "text-center opacity-50" : "px-4"}`}>
-          {(isHovered || mobile) ? "Management" : "•••"}
+          {(isHovered || mobile) ? "Preferences" : "•••"}
         </p>
 
         {bottomItems.map((item) => (
@@ -132,7 +142,7 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
                 <p className="text-xs font-black text-white truncate uppercase tracking-tighter">{userName}</p>
                 <div className="flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />
-                  <p className="text-[9px] text-slate-400 font-bold truncate">Project Manager</p>
+                  <p className="text-[9px] text-slate-400 font-bold truncate">Auditor</p>
                 </div>
               </motion.div>
             )}
@@ -150,12 +160,30 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
             )}
           </div>
 
+          {/* Email Tooltip for collapsed state */}
           {!isHovered && !mobile && (
             <div className="absolute left-20 bg-slate-900 text-white text-[10px] px-3 py-2 rounded-md opacity-0 group-hover:opacity-100 pointer-events-none transition-all transform -translate-x-2.5 group-hover:translate-x-0 font-bold z-50 whitespace-nowrap shadow-2xl border border-white/5">
-              <p className="text-[#6A5AFF] mb-0.5 uppercase tracking-widest">PMO Account</p>
+              <p className="text-[#6A5AFF] mb-0.5">Logged in as:</p>
               {userEmail}
               <div className="mt-2 pt-2 border-t border-white/10 flex items-center gap-2 text-emerald-400">
                 <LogOut size={10} /> Logout
+              </div>
+            </div>
+          )}
+
+          {(isHovered || mobile) && (
+            <div className="mt-4 px-1 pb-1">
+              <div className="flex justify-between text-[8px] font-black text-slate-500 uppercase mb-1.5 tracking-wider">
+                <span>Audit Score</span>
+                <span className="text-white">68%</span>
+              </div>
+              <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "68%" }}
+                  transition={{ duration: 1, ease: "easeOut" }}
+                  className="h-full bg-linear-to-r from-[#6A5AFF] to-[#9F94FF]"
+                />
               </div>
             </div>
           )}
@@ -165,13 +193,13 @@ const SidebarContent = ({ isHovered, mobile, userName, userEmail }) => {
   );
 };
 
-export default function PMOSidebar() {
+export default function AuditorSidebar() {
   const [isHovered, setIsHovered] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const [userData] = useState({
-    name: localStorage.getItem("user_name") || "PMO User",
-    email: localStorage.getItem("user_email") || "abhaysharmans8397@gmail.com"
+    name: localStorage.getItem("user_name") || "Auditor User",
+    email: localStorage.getItem("user_email") || "auditor@capable.com"
   });
 
   return (
@@ -179,7 +207,7 @@ export default function PMOSidebar() {
       {/* Mobile Top Bar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 flex items-center justify-between z-100">
         <div className="flex items-center gap-2 text-[#6A5AFF]">
-          <Briefcase size={24} strokeWidth={2.5} />
+          <ShieldCheck size={24} strokeWidth={2.5} />
           <span className="font-black text-lg tracking-tighter text-slate-900 uppercase">Capable</span>
         </div>
         <button
@@ -234,6 +262,7 @@ export default function PMOSidebar() {
         )}
       </AnimatePresence>
 
+      {/* Spacer to push content to the right */}
       <div className="hidden lg:block shrink-0 transition-all duration-300" style={{ width: 90 }} />
     </>
   );

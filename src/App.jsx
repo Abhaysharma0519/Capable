@@ -16,9 +16,9 @@ import LoginPage from "./pages/LoginPage";
 import Otp from "./pages/Otp";
 import RequestDemo from "./pages/RequestDemo";
 
+// Client Page
 import Dashboard from "./pages/ClientDashboard";
 import ComplianceDetails from "./pages/ClientDetails";
-import Documentation from "./pages/ClientDocumentation";
 import Settings from "./pages/ClientSettings";
 import Forgotpwd from "./pages/Forgotpwd";
 
@@ -28,9 +28,21 @@ import AdminUser from "./pages/AdminUser";
 import AdminOrganizations from "./pages/AdminOrganizations";
 import AdminProjects from "./pages/AdminProjects";
 import AdminCompliances from "./pages/AdminCompliances";
+import AdminSettings from "./pages/AdminSettings";
 
 // PMO Page
 import PMODashboard from "./pages/PMODashboard";
+import PMOUser from "./pages/PMOUser";
+import PMOOrganizations from "./pages/PMOOrganizations";
+import PMOProjects from "./pages/PMOProjects";
+import PMOCompliances from "./pages/PMOCompliances";
+import PMOSettings from "./pages/PMOSettings";
+
+// Auditor Page
+import AuditorDashboard from "./pages/AuditorDashboard";
+import AuditorDetails from "./pages/AuditorDetails";
+import AuditorCompliances from "./pages/AuditorCompliances";
+import AuditorSettings from "./pages/AuditorSettings";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -64,15 +76,16 @@ function App() {
           <Route path="/forgot-password" element={<Forgotpwd />} />
           <Route path="/request-demo" element={<RequestDemo />} />
 
-          {/* Private Routes */}
+          {/* Client Routes */}
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRole="user">
                 <Dashboard />
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/compliance/iso-27001"
             element={
@@ -81,14 +94,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/docs"
-            element={
-              <ProtectedRoute>
-                <Documentation />
-              </ProtectedRoute>
-            }
-          />
+
           <Route
             path="/settings"
             element={
@@ -102,11 +108,12 @@ function App() {
           <Route
             path="/admin-dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRole="admin">
                 <AdminDashboard />
               </ProtectedRoute>
             }
           />
+
           <Route
             path="/admin/users"
             element={
@@ -142,12 +149,99 @@ function App() {
             }
           />
 
+          <Route
+            path="/admin/settings"
+            element={
+              <ProtectedRoute>
+                <AdminSettings />
+              </ProtectedRoute>
+            }
+          />
+
           {/* PMO Routes */}
           <Route
             path="/pmo-dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRole="pmo">
                 <PMODashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/pmo/users"
+            element={
+              <ProtectedRoute>
+                <PMOUser />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pmo/organizations"
+            element={
+              <ProtectedRoute>
+                <PMOOrganizations />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pmo/projects"
+            element={
+              <ProtectedRoute>
+                <PMOProjects />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pmo/compliances"
+            element={
+              <ProtectedRoute>
+                <PMOCompliances />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pmo/settings"
+            element={
+              <ProtectedRoute>
+                <PMOSettings />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Auditor Routes */}
+          <Route
+            path="/auditor-dashboard"
+            element={
+              <ProtectedRoute allowedRole="auditor">
+                <AuditorDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/auditor/compliance/:id"
+            element={
+              <ProtectedRoute>
+                <AuditorDetails />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/auditor/compliances"
+            element={
+              <ProtectedRoute>
+                <AuditorCompliances />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/auditor/settings"
+            element={
+              <ProtectedRoute>
+                <AuditorSettings />
               </ProtectedRoute>
             }
           />

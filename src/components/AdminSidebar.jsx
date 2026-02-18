@@ -15,7 +15,6 @@ const adminNavItems = [
 ];
 
 const bottomItems = [
-  { icon: <FileText size={20} />, label: "Documentation", path: "/admin/docs" },
   { icon: <Settings size={20} />, label: "Settings", path: "/admin/settings" },
 ];
 

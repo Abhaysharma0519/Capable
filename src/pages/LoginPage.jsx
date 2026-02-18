@@ -32,6 +32,8 @@ const LoginPage = () => {
   const ADMIN_PWD = "Imking@2001";
   const PMO_EMAIL = "abhaysharmans8397@gmail.com";
   const PMO_PWD = "Imking@2001";
+  const AUDITOR_EMAIL = "abhaysharmans3972@gmail.com";
+  const AUDITOR_PWD = "Imking@2001";
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -39,8 +41,9 @@ const LoginPage = () => {
     const isAdmin = email === ADMIN_EMAIL && password === ADMIN_PWD;
     const isUser = email === USER_EMAIL;
     const isPmo = email === PMO_EMAIL && password === PMO_PWD;
+    const isAuditor = email === AUDITOR_EMAIL && password === AUDITOR_PWD;
 
-    if (!isAdmin && !isUser && !isPmo) {
+    if (!isAdmin && !isUser && !isPmo && !isAuditor) {
       toast.error("Invalid credentials or Email not registered.");
       return;
     }
@@ -59,7 +62,7 @@ const LoginPage = () => {
     const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
     localStorage.setItem("valid_otp", generatedOtp);
     localStorage.setItem("pending_email", email);
-    localStorage.setItem("login_role", isAdmin ? "admin" : isPmo ? "pmo" : "user");
+    localStorage.setItem("login_role", isAdmin ? "admin" : isPmo ? "pmo" : isAuditor ? "auditor" : "user");
 
     try {
       await emailjs.send(
